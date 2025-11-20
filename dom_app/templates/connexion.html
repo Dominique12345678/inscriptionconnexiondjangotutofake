@@ -1,128 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class="container">
-        <div class="form">
-            <h1>Connexion</h1>
+{% extends "base.html" %}
 
-            {% if messages %}
-            <div class="error-messages">
-                {% for message in messages %}
-                <p class="error">{{ message }}</p>
-                {% endfor %}
-            </div>
-            {% endif %}
+{% block title %}Connexion{% endblock %}
 
-            <form method="post" action="{% url 'connexion' %}">
-                {% csrf_token %}
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" name="username" required>
-                <label for="password">Mot de passe</label>
-                <input type="password" name="password" required>
-                <button type="submit">Se connecter</button>
-            </form>
-            <p class="link">Pas encore inscrit ? <a href="{% url 'inscription' %}">S'inscrire</a></p>
-        </div>
-    </div>
+{% block content %}
+    <h2>Connexion</h2>
     
-    <style>
-        /* CSS */
-        /* Import Google font - Poppins */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+    <form method="post">
+        {% csrf_token %}
+        
+        <p>
+            <label for="id_username">Nom d'utilisateur :</label>
+            <input type="text" id="id_username" name="username" required 
+                   value="{{ request.POST.username|default:'' }}"
+                   placeholder="Votre nom d'utilisateur">
+        </p>
+        
+        <p>
+            <label for="id_password">Mot de passe :</label>
+            <input type="password" id="id_password" name="password" required
+                   placeholder="Votre mot de passe">
+        </p>
+        
+        <button type="submit">Se connecter</button>
+    </form>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+    <p style="margin-top: 20px;">
+        Pas encore de compte ? <a href="{% url 'inscription' %}">Inscrivez-vous ici</a>
+    </p>
 
-        h1 {
-            margin: 20px 0;
-        }
-
-        body {
-            min-height: 100vh;
-            width: 100%;
-            background: #009579;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            width: 400px;
-            background: #fff;
-            border-radius: 7px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .container .form {
-            padding: 30px;
-        }
-
-        label {
-            padding: 10px 0;
-            color: #009579;
-            cursor: pointer;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            font-size: 17px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            outline: none;
-            margin-bottom: 15px;
-            margin-top: 10px;
-        }
-
-        a {
-            font-size: 16px;
-            color: #009579;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        button {
-            color: #fff;
-            background: #009579;
-            width: 100%;
-            padding: 10px;
-            font-size: 17px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 6px;
-            outline: none;
-        }
-
-        button:hover {
-            background: #006653;
-        }
-
-        .link {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .error {
-            background-color: red;
-            color: #fff;
-            border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            text-align: center;
-        }
-    </style>
-</body>
-</html>
+{% endblock %}
